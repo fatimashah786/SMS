@@ -134,7 +134,7 @@ export default function SideNav() {
                   opacity: open ? 1 : 0,
                   color: "darkblue",
                   fontSize: "larger",
-                  fontWeight: "large",
+                  fontWeight: "bold",
                 }}
               />
             </ListItemButton>
@@ -169,13 +169,14 @@ export default function SideNav() {
                   opacity: open ? 1 : 0,
                   color: "darkblue",
                   fontSize: "larger",
-                  fontWeight: "large",
+
+                  fontWeight: "bold",
                 }}
               />
             </ListItemButton>
           </ListItem>
 
-          <ListItem
+          {/** <ListItem
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
@@ -209,7 +210,7 @@ export default function SideNav() {
                 }}
               />
             </ListItemButton>
-          </ListItem>
+              </ListItem> **/}
         </List>
         <Divider />
       </Drawer>

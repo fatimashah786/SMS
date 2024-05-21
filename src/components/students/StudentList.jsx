@@ -39,6 +39,7 @@ const StudentList = ({
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -46,8 +47,9 @@ const StudentList = ({
   const handleEditOpen = () => setEditOpen(true);
 
   const handleEditClose = () => setEditOpen(false);
+
   useEffect(() => {
-    retrieveStudents();
+    retrieveStudents().then(() => setLoading(false));
   }, [retrieveStudents]);
 
   const handleDeleteClick = async (id) => {
@@ -62,10 +64,6 @@ const StudentList = ({
     });
 
     if (confirmed.isConfirmed) {
-      {
-        /*// Dispatch the deleteStudent action
-         */
-      }
       deleteStudent(id);
       toast.success("student deleted successfully");
     }
@@ -75,6 +73,15 @@ const StudentList = ({
     setSelectedRowId(id);
     handleEditOpen();
   };
+
+  if (loading) {
+    return (
+      <Typography variant="body1" align="center" sx={{ color: "red" }}>
+        Loading...
+      </Typography>
+    );
+  }
+
   return (
     <>
       <ToastContainer
@@ -147,118 +154,135 @@ const StudentList = ({
           </Button>
         </Stack>
         <Box height={10} />
-        <center>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    align="left"
-                    style={{
-                      minWidth: "100px",
-                      color: "teal",
-                      fontFamily: "cursive",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Name
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{
-                      minWidth: "100px",
-                      color: "teal",
-                      fontFamily: "cursive",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Id
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{
-                      minWidth: "100px",
-                      color: "teal",
-                      fontFamily: "cursive",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Email
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{
-                      minWidth: "100px",
-                      color: "teal",
-                      fontFamily: "cursive",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Phone
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{
-                      minWidth: "100px",
-                      color: "teal",
-                      fontFamily: "cursive",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Department
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{
-                      minWidth: "100px",
-                      color: "teal",
-                      fontFamily: "cursive",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Action
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {students.map((row) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    <TableCell align="left">{row.name}</TableCell>
-                    <TableCell align="left">{row.enroll}</TableCell>
-                    <TableCell align="left">{row.email}</TableCell>
-                    <TableCell align="left">{row.phone}</TableCell>
-                    <TableCell align="left">{row.department}</TableCell>
-                    <TableCell align="left">
-                      <Stack spacing={2} direction="row">
-                        <EditIcon
-                          style={{
-                            fontSize: "20px",
-                            color: "green",
-                            cursor: "pointer",
-                          }}
-                          className="cursor-pointer"
-                          onClick={() => handleEditClick(row.id)}
-                        />
-                        <DeleteIcon
-                          style={{
-                            fontSize: "20px",
-                            color: "red",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => handleDeleteClick(row.id)}
-                        />
-                      </Stack>
+        {students.length > 0 ? (
+          <center>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      align="left"
+                      style={{
+                        minWidth: "100px",
+                        color: "teal",
+                        fontFamily: "cursive",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Name
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{
+                        minWidth: "100px",
+                        color: "teal",
+                        fontFamily: "cursive",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Id
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{
+                        minWidth: "100px",
+                        color: "teal",
+                        fontFamily: "cursive",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Email
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{
+                        minWidth: "100px",
+                        color: "teal",
+                        fontFamily: "cursive",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Phone
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{
+                        minWidth: "100px",
+                        color: "teal",
+                        fontFamily: "cursive",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Department
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{
+                        minWidth: "100px",
+                        color: "teal",
+                        fontFamily: "cursive",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Action
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </center>
+                </TableHead>
+                <TableBody>
+                  {students.map((row) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.enroll}</TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
+                      <TableCell align="left">{row.phone}</TableCell>
+                      <TableCell align="left">{row.department}</TableCell>
+                      <TableCell align="left">
+                        <Stack spacing={2} direction="row">
+                          <EditIcon
+                            style={{
+                              fontSize: "20px",
+                              color: "#0d6efd",
+                              cursor: "pointer",
+                            }}
+                            className="cursor-pointer"
+                            onClick={() => handleEditClick(row.id)}
+                          />
+                          <DeleteIcon
+                            style={{
+                              fontSize: "20px",
+                              color: "red",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => handleDeleteClick(row.id)}
+                          />
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </center>
+        ) : (
+          <Typography
+            variant="body1"
+            align="center"
+            sx={{
+              fontSize: 20,
+              color: "red",
+              marginLeft: 10,
+              marginRight: 10,
+              padding: 10,
+            }}
+          >
+            No Data Available !!
+          </Typography>
+        )}
       </Paper>
     </>
   );
 };
+
 const mapStateToProps = (state) => ({
   students: state.students.students,
 });

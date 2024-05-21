@@ -24,7 +24,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-//import { Toast ,ToastContainer} from "react-toastify/dist/components";
 const style = {
   position: "absolute",
   top: "50%",
@@ -45,6 +44,8 @@ const StudentList = ({ closeEvent }) => {
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState("");
+  const [loading, setLoading] = useState(true); // State to track loading state
+  const [noData, setNoData] = useState(false); // State to track if no data is found
 
   useEffect(() => {
     getUsers();
@@ -59,8 +60,17 @@ const StudentList = ({ closeEvent }) => {
       }));
       setOriginalRows(fetchedRows);
       setFilteredRows(fetchedRows);
+      setLoading(false); // Set loading to false when data is fetched
+
+      // Check if no data is found
+      if (fetchedRows.length === 0) {
+        setNoData(true);
+      } else {
+        setNoData(false);
+      }
     } catch (error) {
       console.error("Error fetching users:", error);
+      setLoading(false); // Set loading to false even if there's an error
     }
   };
 
@@ -71,7 +81,6 @@ const StudentList = ({ closeEvent }) => {
   const handleEditClose = () => setEditOpen(false);
 
   const deleteUser = async (id) => {
-    // Show confirmation dialog before deleting the record
     const confirmed = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -82,20 +91,13 @@ const StudentList = ({ closeEvent }) => {
       confirmButtonText: "Yes, delete it!",
     });
 
-    // If user confirms deletion, proceed with deletion
     if (confirmed.isConfirmed) {
       try {
-        // Delete the record from the database
         await deleteDoc(doc(db, "projects", id));
-
-        // Display success toast
         toast.success("Record has been deleted");
-
-        // Refresh the user list or perform any necessary action
         getUsers();
       } catch (error) {
         console.error("Error deleting user:", error);
-        // Display error toast if deletion fails
         toast.error("Error deleting record");
       }
     }
@@ -129,33 +131,30 @@ const StudentList = ({ closeEvent }) => {
   return (
     <>
       <ToastContainer
-        position="top-right" // Change the position as needed
-        autoClose={5000} // Adjust autoClose duration if needed
-        hideProgressBar={false} // Show progress bar
-        newestOnTop={false} // Show newest toast at the bottom
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ zIndex: 9999 }} // Set a high z-index to ensure it appears above other elements
+        style={{ zIndex: 9999 }}
       />
 
       <div>
         <Modal
           open={open}
-          //onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
             <ProjectForm closeEvent={handleClose} refreshTable={getUsers} />
-            {/* Render StudentForm for adding */}
           </Box>
         </Modal>
         <Modal
           open={editOpen}
-          // onClose={handleEditClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -163,7 +162,7 @@ const StudentList = ({ closeEvent }) => {
             <ProjectForm
               closeEvent={handleEditClose}
               docId={selectedRowId}
-              isEditMode={true} // Pass isEditMode as true for editing
+              isEditMode={true}
               refreshTable={getUsers}
             />
           </Box>
@@ -194,7 +193,7 @@ const StudentList = ({ closeEvent }) => {
             sx={{
               bgcolor: "teal",
               "&:hover": {
-                bgcolor: "teal", // Change color on hover if needed
+                bgcolor: "teal",
               },
             }}
             endIcon={<AddCircleIcon />}
@@ -204,123 +203,209 @@ const StudentList = ({ closeEvent }) => {
         </Stack>
         <Box height={10} />
 
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  align="left"
-                  style={{
-                    minWidth: "100px",
-                    color: "teal",
-                    fontFamily: "cursive",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Project_Name
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{
-                    minWidth: "100px",
-                    color: "teal",
-                    fontFamily: "cursive",
-                    fontWeight: "bold",
-                  }}
-                >
-                  stu_name
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{
-                    minWidth: "100px",
-                    color: "teal",
-                    fontFamily: "cursive",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Budget
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{
-                    minWidth: "100px",
-                    color: "teal",
-                    fontFamily: "cursive",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Type
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{
-                    minWidth: "100px",
-                    color: "teal",
-                    fontFamily: "cursive",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Description
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{
-                    minWidth: "100px",
-                    color: "teal",
-                    fontFamily: "cursive",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Action
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredRows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    <TableCell align="left">{row.project_name}</TableCell>
-                    <TableCell align="left">{row.stuname}</TableCell>
-                    <TableCell align="left">{row.expected_budget}</TableCell>
-                    <TableCell align="left">{row.project_type}</TableCell>
-                    <TableCell align="left">{row.description}</TableCell>
-                    <TableCell align="left">
-                      <Stack spacing={2} direction="row">
-                        <EditIcon
-                          style={{
-                            fontSize: "20px",
-                            color: "blue",
-                            cursor: "pointer",
-                          }}
-                          className="cursor-pointer"
-                          onClick={() => editUser(row.id)}
-                        />
-                        <DeleteIcon
-                          style={{
-                            fontSize: "20px",
-                            color: "darkred",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => deleteUser(row.id)}
-                        />
-                      </Stack>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={filteredRows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        {loading ? ( // Display loading indicator if still loading
+          <Typography variant="body1" align="center">
+            Loading...
+          </Typography>
+        ) : noData ? ( // Display "No data available" message if no data present
+          <Typography
+            variant="body1"
+            align="center"
+            sx={{
+              fontSize: 20,
+              color: "red",
+              marginLeft: 10,
+              marginRight: 10,
+              padding: 10,
+            }}
+          >
+            No Data Available !!
+          </Typography>
+        ) : (
+          // Render table if there is data
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    align="left"
+                    style={{
+                      minWidth: "100px",
+                      color: "teal",
+                      fontFamily: "cursive",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Project_Name
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      minWidth: "100px",
+                      color: "teal",
+                      fontFamily: "cursive",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    stu_name
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      minWidth: "100px",
+                      color: "teal",
+                      fontFamily: "cursive",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Budget
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      minWidth: "100px",
+                      color: "teal",
+                      fontFamily: "cursive",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Type
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      minWidth: "100px",
+                      color: "teal",
+                      fontFamily: "cursive",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Description
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      minWidth: "100px",
+                      color: "teal",
+                      fontFamily: "cursive",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Action
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredRows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableCell
+                        align="left"
+                        style={{
+                          minWidth: "100px",
+                          color: "black",
+                          fontFamily: "verdana",
+                          fontSize: 15,
+                        }}
+                      >
+                        {row.project_name}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          minWidth: "100px",
+                          color: "black",
+                          fontFamily: "verdana",
+                          fontSize: 15,
+                        }}
+                      >
+                        {row.stuname}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          minWidth: "100px",
+                          color: "black",
+                          fontFamily: "verdana",
+                          fontSize: 15,
+                        }}
+                      >
+                        {row.expected_budget}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          minWidth: "100px",
+                          color: "black",
+                          fontFamily: "verdana",
+                          fontSize: 15,
+                        }}
+                      >
+                        {row.project_type}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          minWidth: "100px",
+                          color: "black",
+                          fontFamily: "verdana",
+                          fontSize: 15,
+                          wordWrap: "break-word", // Ensure long words wrap to next line
+                          whiteSpace: "pre-wrap", // Preserve line breaks and wraps
+                          overflowWrap: "break-word", // Ensure content breaks correctly
+                          maxWidth: "300px",
+                        }}
+                      >
+                        {row.description}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          minWidth: "100px",
+                          color: "black",
+                          fontFamily: "verdana",
+                          fontSize: 15,
+                        }}
+                      >
+                        <Stack spacing={2} direction="row">
+                          <EditIcon
+                            style={{
+                              fontSize: "20px",
+                              color: "#0d6efd",
+                              cursor: "pointer",
+                            }}
+                            className="cursor-pointer"
+                            onClick={() => editUser(row.id)}
+                          />
+                          <DeleteIcon
+                            style={{
+                              fontSize: "20px",
+                              color: "darkred",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => deleteUser(row.id)}
+                          />
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+        {!loading &&
+          !noData && ( // Display pagination only if not loading and data is available
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={filteredRows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          )}
       </Paper>
     </>
   );
