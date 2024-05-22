@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useUserAuth } from "../context/UserAuthContext";
 import { TextField } from "@mui/material";
 
@@ -72,17 +71,17 @@ const Signup = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full sm:max-w-md bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-        <h1 className="mb-3 text-center text-4xl font-semibold ">Sign Up</h1>
+        <h1 className="mb-3 text-center text-4xl font-semibold">Sign Up</h1>
         {errorMessage && (
           <p className="text-red-500 mb-3">&#9888;{errorMessage}</p>
         )}
-        <form onSubmit={onSubmit} className="flex flex-col gap-6 ">
+        <form onSubmit={onSubmit} className="flex flex-col gap-6">
           {Object.keys(formData).map((field) => (
             <TextField
               className="text-center"
               key={field}
               margin="normal"
-              sx={{ width: "300px", marginLeft: "50px" }}
+              sx={{ width: "100%" }} // Adjust width for mobile
               label={field.charAt(0).toUpperCase() + field.slice(1)}
               name={field}
               value={formData[field]}
@@ -93,11 +92,10 @@ const Signup = () => {
             />
           ))}
 
-          <div className="text-center mt-4 ">
+          <div className="text-center mt-4">
             <button
-              style={{ width: "230px", height: "50px", padding: "10px 20px" }}
-              size="large"
-              className="btn  btn-outline-primary font-sans font-bold text-center uppercase"
+              className="btn btn-outline-primary font-sans font-bold uppercase"
+              style={{ width: "100%" }} // Adjust width for mobile
               type="submit"
             >
               Sign up

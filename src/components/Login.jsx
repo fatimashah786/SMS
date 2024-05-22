@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useUserAuth } from "../context/UserAuthContext";
 import { TextField } from "@mui/material";
 
@@ -8,6 +7,7 @@ const Login = () => {
   useEffect(() => {
     document.title = "SignIn";
   }, []);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -95,7 +95,7 @@ const Login = () => {
             name="email"
             onChange={handleChange}
             error={!!emailError}
-            sx={{ width: "300px", marginLeft: "50px" }}
+            sx={{ width: "100%" }} // Adjust width for mobile
             helperText={emailError}
           />
 
@@ -107,28 +107,22 @@ const Login = () => {
             name="password"
             onChange={handleChange}
             error={!!passwordError}
-            sx={{ width: "300px", marginLeft: "50px" }}
+            sx={{ width: "100%" }} // Adjust width for mobile
             helperText={passwordError}
           />
-          {/* {error && <p className="text-red-500 mb-3 mr-95">{error}</p>}*/}
           {error && (
             <p
-              style={{
-                width: "300px",
-                marginLeft: "50px",
-                marginBottom: "0.75rem",
-              }} // Adjust marginLeft to match input tags
               className="text-red-500"
+              style={{ width: "100%", marginLeft: "0" }}
             >
               {error}
             </p>
           )}
 
-          <div className="text-center mt-4 ">
+          <div className="text-center mt-4">
             <button
-              style={{ width: "230px", height: "50px", padding: "10px 20px" }}
-              size="large"
-              className="btn  btn-outline-primary font-sans font-bold text-center uppercase"
+              className="btn btn-outline-primary font-sans font-bold uppercase"
+              style={{ width: "100%" }} // Adjust width for mobile
               type="submit"
             >
               Log In
@@ -136,18 +130,14 @@ const Login = () => {
           </div>
         </form>
 
-        <div className="text-center mt-4 ">
+        <div className="text-center mt-4">
           <button
-            size="large"
-            className=" btn  btn-outline-primary select-none font-sans font-bold text-center uppercase 
-          transition-all disabled:opacity-50 disabled:shadow-none 
-          disabled:pointer-events-none text-sm py-3.5 px-7 rounded-lg border 
-          border-blue-gray-500 text-blue-gray-500 hover:opacity-75 focus:ring 
-          focus:ring-blue-gray-200 active:opacity-[0.85] items-center gap-3"
+            className="btn btn-outline-primary select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-3.5 px-7 rounded-lg border border-blue-gray-500 text-blue-gray-500 hover:opacity-75 focus:ring focus:ring-blue-gray-200 active:opacity-[0.85] items-center gap-3"
+            style={{ width: "100%" }} // Adjust width for mobile
             type="button"
             onClick={handleGoogleSignIn}
           >
-            &nbsp; Continue with Google
+            Continue with Google
           </button>
         </div>
 
