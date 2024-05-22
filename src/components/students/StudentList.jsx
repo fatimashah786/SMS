@@ -126,7 +126,7 @@ const StudentList = ({
           gutterBottom
           variant="h5"
           component="div"
-          sx={{ padding: "20px", color: "blue", fontFamily: "cursive" }}
+          sx={{ padding: "20px", color: "blue", fontFamily: "verdana" }}
         >
           Student List
         </Typography>
@@ -165,7 +165,7 @@ const StudentList = ({
                       style={{
                         minWidth: "100px",
                         color: "teal",
-                        fontFamily: "cursive",
+                        fontFamily: "verdana",
                         fontWeight: "bold",
                       }}
                     >
@@ -176,7 +176,7 @@ const StudentList = ({
                       style={{
                         minWidth: "100px",
                         color: "teal",
-                        fontFamily: "cursive",
+                        fontFamily: "verdana",
                         fontWeight: "bold",
                       }}
                     >
@@ -187,7 +187,7 @@ const StudentList = ({
                       style={{
                         minWidth: "100px",
                         color: "teal",
-                        fontFamily: "cursive",
+                        fontFamily: "verdana",
                         fontWeight: "bold",
                       }}
                     >
@@ -198,7 +198,7 @@ const StudentList = ({
                       style={{
                         minWidth: "100px",
                         color: "teal",
-                        fontFamily: "cursive",
+                        fontFamily: "verdana",
                         fontWeight: "bold",
                       }}
                     >
@@ -209,7 +209,7 @@ const StudentList = ({
                       style={{
                         minWidth: "100px",
                         color: "teal",
-                        fontFamily: "cursive",
+                        fontFamily: "verdana",
                         fontWeight: "bold",
                       }}
                     >
@@ -220,7 +220,7 @@ const StudentList = ({
                       style={{
                         minWidth: "100px",
                         color: "teal",
-                        fontFamily: "cursive",
+                        fontFamily: "verdana",
                         fontWeight: "bold",
                       }}
                     >

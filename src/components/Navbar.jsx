@@ -55,7 +55,7 @@ export default function Navbar() {
               display: "block",
               sm: "none",
               color: "white",
-              fontFamily: "cursive",
+              fontFamily: "verdana",
             }}
           >
             Student Management System

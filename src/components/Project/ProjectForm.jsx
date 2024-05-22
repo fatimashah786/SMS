@@ -275,7 +275,7 @@ export default function ProjectForm({
             {/* Second field */}
 
             <FormControl fullWidth error={!!errors.stuname}>
-              <InputLabel id="stuname-label">Select </InputLabel>
+              <InputLabel id="stuname-label">Project </InputLabel>
               <Select
                 labelId="stuname-label"
                 id="stuname"

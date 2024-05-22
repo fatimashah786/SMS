@@ -173,7 +173,7 @@ const StudentList = ({ closeEvent }) => {
           gutterBottom
           variant="h5"
           component="div"
-          sx={{ padding: "20px", color: "blue", fontFamily: "cursive" }}
+          sx={{ padding: "20px", color: "blue", fontFamily: "verdana" }}
         >
           Project List
         </Typography>
@@ -232,7 +232,7 @@ const StudentList = ({ closeEvent }) => {
                     style={{
                       minWidth: "100px",
                       color: "teal",
-                      fontFamily: "cursive",
+                      fontFamily: "verdana",
                       fontWeight: "bold",
                     }}
                   >
@@ -243,7 +243,7 @@ const StudentList = ({ closeEvent }) => {
                     style={{
                       minWidth: "100px",
                       color: "teal",
-                      fontFamily: "cursive",
+                      fontFamily: "verdana",
                       fontWeight: "bold",
                     }}
                   >
@@ -254,7 +254,7 @@ const StudentList = ({ closeEvent }) => {
                     style={{
                       minWidth: "100px",
                       color: "teal",
-                      fontFamily: "cursive",
+                      fontFamily: "verdana",
                       fontWeight: "bold",
                     }}
                   >
@@ -265,7 +265,7 @@ const StudentList = ({ closeEvent }) => {
                     style={{
                       minWidth: "100px",
                       color: "teal",
-                      fontFamily: "cursive",
+                      fontFamily: "verdana",
                       fontWeight: "bold",
                     }}
                   >
@@ -276,7 +276,7 @@ const StudentList = ({ closeEvent }) => {
                     style={{
                       minWidth: "100px",
                       color: "teal",
-                      fontFamily: "cursive",
+                      fontFamily: "verdana",
                       fontWeight: "bold",
                     }}
                   >
@@ -287,7 +287,7 @@ const StudentList = ({ closeEvent }) => {
                     style={{
                       minWidth: "100px",
                       color: "teal",
-                      fontFamily: "cursive",
+                      fontFamily: "verdana",
                       fontWeight: "bold",
                     }}
                   >
