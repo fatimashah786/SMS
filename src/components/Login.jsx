@@ -83,8 +83,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 border border-gray-300 mx-4 sm:mx-auto">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 border border-gray-300">
         <h1 className="mb-3 text-center text-3xl font-semibold">Sign In</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <TextField
@@ -140,7 +140,7 @@ const Login = () => {
         </div>
 
         <div className="p-4 box mt-3 text-center">
-          Don't have an account? &nbsp;
+          Don't have an account?&nbsp;
           <Link className="text-blue-900 underline" to="/signup">
             Sign up
           </Link>

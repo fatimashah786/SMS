@@ -69,8 +69,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full sm:max-w-md bg-white rounded-lg shadow-lg p-6 border border-gray-300">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 border border-gray-300">
         <h1 className="mb-3 text-center text-4xl font-semibold">Sign Up</h1>
         {errorMessage && (
           <p className="text-red-500 mb-3">&#9888;{errorMessage}</p>
@@ -78,7 +78,6 @@ const Signup = () => {
         <form onSubmit={onSubmit} className="flex flex-col gap-6">
           {Object.keys(formData).map((field) => (
             <TextField
-              className="text-center"
               key={field}
               margin="normal"
               sx={{ width: "100%" }} // Adjust width for mobile
@@ -94,8 +93,7 @@ const Signup = () => {
 
           <div className="text-center mt-4">
             <button
-              className="btn btn-outline-primary font-sans font-bold uppercase"
-              style={{ width: "100%" }} // Adjust width for mobile
+              className="btn btn-outline-primary font-sans font-bold uppercase w-full"
               type="submit"
             >
               Sign up
@@ -103,7 +101,7 @@ const Signup = () => {
           </div>
         </form>
         <div className="text-center mt-4">
-          Already have an account? &nbsp;
+          Already have an account?&nbsp;
           <Link className="text-blue-900 underline" to="/">
             Sign-In
           </Link>
