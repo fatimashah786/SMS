@@ -84,7 +84,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 border border-gray-300">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 border border-gray-300 mx-4 sm:mx-auto">
         <h1 className="mb-3 text-center text-3xl font-semibold">Sign In</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <TextField
@@ -121,8 +121,7 @@ const Login = () => {
 
           <div className="text-center mt-4">
             <button
-              className="btn btn-outline-primary font-sans font-bold uppercase"
-              style={{ width: "100%" }} // Adjust width for mobile
+              className="btn btn-outline-primary font-sans font-bold uppercase w-full"
               type="submit"
             >
               Log In
@@ -132,8 +131,7 @@ const Login = () => {
 
         <div className="text-center mt-4">
           <button
-            className="btn btn-outline-primary select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-3.5 px-7 rounded-lg border border-blue-gray-500 text-blue-gray-500 hover:opacity-75 focus:ring focus:ring-blue-gray-200 active:opacity-[0.85] items-center gap-3"
-            style={{ width: "100%" }} // Adjust width for mobile
+            className="btn btn-outline-primary select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-3.5 px-7 rounded-lg border border-blue-gray-500 text-blue-gray-500 hover:opacity-75 focus:ring focus:ring-blue-gray-200 active:opacity-[0.85] items-center gap-3 w-full"
             type="button"
             onClick={handleGoogleSignIn}
           >
@@ -143,10 +141,7 @@ const Login = () => {
 
         <div className="p-4 box mt-3 text-center">
           Don't have an account? &nbsp;
-          <Link
-            className="text-blue-900 text-decoration-underline underline "
-            to="/signup"
-          >
+          <Link className="text-blue-900 underline" to="/signup">
             Sign up
           </Link>
         </div>
